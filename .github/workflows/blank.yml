@@ -45,4 +45,4 @@ jobs:
       - name: Sign the published Docker image
         env:
           COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
-        run: cosign sign --key cosign.key  hardiikpl/my-nginx@${{ steps.get-image-digest.outputs.digest }}
+        run: cosign sign --key cosign.key  hardiikpl/my-nginx@${{ steps.get-image-digest.outputs.digest }} -y
