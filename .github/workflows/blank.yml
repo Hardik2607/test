@@ -1,0 +1,44 @@
+name: Create Release Minor For Testnet
+on:
+    workflow_dispatch:
+        inputs:
+          triggerWorkflow:
+            description: 'Trigger the workflow for minor-release in testnet'
+            required: true
+            type: string
+env:
+  DOCKER_USER: ${{vars.DOCKER_USER}}
+  DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+  
+permissions:
+    contents: read
+
+jobs:
+  Build_and_Push_Images:
+    name: Build_and_Push_Images
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysi
+
+      - name: Build the lite-node devnet Docker image
+        id: image-build-lite-node-DEVNET
+        working-directory: services/lite-node/
+        run: |
+          echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
+          docker pull nginx
+          docker tag nginx:latest hardiikpl/my-nginx:1.0.5
+          docker push hardiikpl/my-nginx:1.0.5
+      - name: cosign-installer
+        uses: sigstore/cosign-installer@v2.0.0
+        
+      - name: Write signing key to disk
+        env:
+          KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
+        run: 'echo "$KEY" > cosign.key'
+        shell: bash
+      - name: Sign the published Docker image
+        env:
+          COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
+        run: cosign sign --key cosign.key  hardiikpl/my-nginx:1.0.5
