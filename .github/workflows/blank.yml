@@ -7,7 +7,7 @@ on:
             required: true
             type: string
 env:
-  DOCKER_USER: ${{vars.DOCKER_USER}}
+  DOCKER_USER: ${{secrets.DOCKER_USER}}
   DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
   
 permissions:
