@@ -30,7 +30,7 @@ jobs:
           docker tag nginx:latest hardiikpl/my-nginx:1.0.5
           docker push hardiikpl/my-nginx:1.0.5
       - name: cosign-installer
-        uses: sigstore/cosign-installer@v2.0.0
+        uses: sigstore/cosign-installer@main
         
       - name: Write signing key to disk
         env:
