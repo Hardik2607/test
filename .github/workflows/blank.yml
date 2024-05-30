@@ -30,6 +30,8 @@ jobs:
           docker tag nginx:latest hardiikpl/my-nginx:${{ github.sha }}
           docker push hardiikpl/my-nginx:${{ github.sha }}
   release-patch-devnet:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
         - uses: actions/checkout@v4
