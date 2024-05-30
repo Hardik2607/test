@@ -29,20 +29,17 @@ jobs:
           docker pull nginx
           docker tag nginx:latest hardiikpl/my-nginx:${{ github.sha }}
           docker push hardiikpl/my-nginx:${{ github.sha }}
-      - name: cosign-installer
-        uses: sigstore/cosign-installer@main
-        
-      - name: Write signing key to disk
-        env:
-          KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
-        run: 'echo "$KEY" > cosign.key'
-        shell: bash
-
-      - name: Get the digest of the pushed image
-        id: get-image-digest
-        run: echo "::set-output name=digest::$(docker inspect --format='{{index .RepoDigests 0}}' hardiikpl/my-nginx:${{ github.sha }} | cut -d'@' -f2)"
-        
-      - name: Sign the published Docker image
-        env:
-          COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
-        run: cosign sign --key cosign.key  hardiikpl/my-nginx@${{ steps.get-image-digest.outputs.digest }} -y
+  release-patch-devnet:
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v4
+          with:
+            fetch-depth: 0
+        - name: git config
+          run: |
+            git config --global user.name 'github-actions'
+            git config --global user.email 'github-actions@github.com'
+        - run: npm install
+        - run: npm run release --ci
+          env:
+            GITHUB_TOKEN: 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
