@@ -40,6 +40,7 @@ jobs:
             git config --global user.name 'github-actions'
             git config --global user.email 'github-actions@github.com'
         - run: npm install
+        - run: npm login
         - run: npm run release --ci
           env:
             GITHUB_TOKEN: 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
