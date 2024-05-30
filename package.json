@@ -1,6 +1,6 @@
 {
   "name": "decentralisation",
-  "version": "0.115.1",
+  "version": "0.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bitscrunch-protocol/decentralisation.git"
+    "url": "git+https://github.com/Hardik2607/test.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bitscrunch-protocol/decentralisation/issues"
+    "url": "https://github.com/Hardik2607/test/issues"
   },
-  "homepage": "https://github.com/bitscrunch-protocol/decentralisation#readme",
+  "homepage": "https://github.com/Hardik2607/test#readme",
   "devDependencies": {
     "eslint": "^8.56.0",
     "husky": "^8.0.3",
